@@ -18,6 +18,10 @@ inputs:
     description: 'Syspage env variable'
     default: ''
     required: false
+  long_test:
+    description: 'Env variable for building long tests'
+    default: ''
+    required: false
   # github doesn't allow array of arguments, we need to pass them one-by-one
   param1:
     description: 'Parameters to the main build script - 1st param'
@@ -52,6 +56,7 @@ runs:
     CONSOLE: 'serial'
     TARGET: ${{ inputs.target }}
     SYSPAGE: ${{ inputs.syspage }}
+    LONG_TEST:  ${{ inputs.long_test }}
   args:
     - ${{ inputs.param1 }}
     - ${{ inputs.param2 }}
