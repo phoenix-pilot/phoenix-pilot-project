@@ -26,8 +26,8 @@ runs:
     - '-T${{ inputs.target }}'
     # "--long-test" "True" enables long tests
     # "--long-test" "" disables long tests - default
-    - '--long-test' 
-    - '${{ inputs.long_test }}'
+    # - '--long-test' 
+    - ${{ inputs.long_tests && '--long-test' || '' }}
 
 # branding
 branding:
