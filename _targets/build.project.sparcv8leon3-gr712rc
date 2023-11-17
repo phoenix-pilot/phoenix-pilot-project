@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Shell script for building sparcv8leon3-gr716 project
+# Shell script for building sparcv8leon3-gr712rc project
 #
-# Copyright 2022 Phoenix Systems
+# Copyright 2023 Phoenix Systems
 # Author: Lukasz Leczkowski
 #
 [ "${BASH_SOURCE[0]}" -ef "$0" ] && echo "You should source this script, not execute it!" && exit 1
@@ -30,33 +30,32 @@ export PORTS_CURL=n
 #
 # Platform dependent parameters
 #
-SIZE_PAGE=$((0x200))
+SIZE_PAGE=$((0x1000))
 PAGE_MASK=$((~(SIZE_PAGE - 1)))
 KERNEL_OFFS=$((0xF000))
 
-BOOT_DEVICE="flash0"              # Default boot device
+BOOT_DEVICE="ram0"              # Default boot device
 NAME_USER_SCRIPT="user.plo"       # User script name
 OFFS_USER_SCRIPT=$((0xE000))
 MAGIC_USER_SCRIPT=$((0xdabaabad)) # User script magic value
 
 PREINIT_SCRIPT=(
-	"map dram 0x30000000 0x3000FFFF rw"
-	"map iram 0x31000000 0x3101FFFF rx"
-	"map extram 0x40000000 0x401FFFFF rwx"
-	"phfs uart3 0.3 phoenixd"
-	"phfs flash0 2.0 raw"
-	"console 0.2"
+	"map ksram 0x40000000 0x4003ffff rwx"
+	"map sram 0x40040000 0x80000000 rwx"
+	"console 0.0"
+	"phfs uart1 0.1 phoenixd"
+	"phfs ram0 4.0 raw"
 )
 
 USER_SCRIPT=(
 	"kernel ${BOOT_DEVICE}"
-	"app ${BOOT_DEVICE} -x dummyfs extram extram"
-	"app ${BOOT_DEVICE} -x gr716-multi extram extram"
-	"app ${BOOT_DEVICE} -x psh extram extram"
-	"app ${BOOT_DEVICE} -x gr716-flash extram extram"
+	"app ${BOOT_DEVICE} -x grlib-uart sram sram"
+	"app ${BOOT_DEVICE} -x dummyfs sram sram"
+	"app ${BOOT_DEVICE} -x psh sram sram"
 	"wait 2000"
 	"go!"
 )
+
 
 b_build_project() {
 	b_log "Building user applications"
@@ -72,11 +71,8 @@ b_build_target() {
 
 	make -C plo all
 
-	declare -F b_convert_project >/dev/null && b_convert_project
-
-	cp "${PREFIX_PROG_STRIPPED}plo-ram-${TARGET_FAMILY}-${TARGET_SUBFAMILY}.img" "$PREFIX_BOOT/plo-ram.img"
+	cp "${PREFIX_PROG_STRIPPED}plo-${TARGET_FAMILY}-${TARGET_SUBFAMILY}.img" "$PREFIX_BOOT/plo.img"
 }
-
 
 
 b_image_target() {
