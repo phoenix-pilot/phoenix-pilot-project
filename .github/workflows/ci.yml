@@ -13,5 +13,5 @@ on:
 
 jobs:
   call-ci:
-    uses: phoenix-pilot/phoenix-pilot-project/.github/workflows/ci-project.yml@PNieck/enable_CI
+    uses: phoenix-pilot/phoenix-pilot-project/.github/workflows/ci-project.yml@master
     secrets: inherit
