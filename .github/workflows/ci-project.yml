@@ -66,7 +66,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: phoenix-rtos-${{ matrix.target }}
+          name: phoenix-pilot-${{ matrix.target }}
           path: |
             _boot/${{ matrix.target }}
             rootfs-${{ matrix.target }}.tar
@@ -96,7 +96,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: phoenix-rtos-${{ matrix.target }}
+          name: phoenix-pilot-${{ matrix.target }}
 
       - name: Untar rootfs
         working-directory: _fs
@@ -125,7 +125,7 @@ jobs:
   test-hw:
     needs: build
     name: test HW
-    if: false # disable for now
+    if: false   # disable for now
     runs-on: ${{ matrix.target }}
     outputs:
       runner_result: ${{ steps.runner.outcome }}
@@ -143,7 +143,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: phoenix-rtos-${{ matrix.target }}
+          name: phoenix-pilot-${{ matrix.target }}
 
       - name: Untar rootfs
         working-directory: _fs
@@ -201,6 +201,6 @@ jobs:
 
   send-notification:
     needs: ['build', 'test-emu', 'test-hw']
-    if: failure() && github.event_name != 'pull_request'
+    if: failure() && github.event_name != 'pull_request' && false   # disable for now
     uses: phoenix-rtos/phoenix-rtos-project/.github/workflows/_send_google_chat.yml@master
     secrets: inherit
