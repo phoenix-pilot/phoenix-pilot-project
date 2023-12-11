@@ -43,18 +43,18 @@ jobs:
         with:
           submodules: recursive
 
-      # step 2: checkout phoenix-rtos-project repository code in .buildroot and symlink submodule name to `workspace`
+      # step 2: checkout phoenix-pilot-project repository code in .buildroot and symlink submodule name to `workspace`
       # that way workspace file paths will match submodule paths - making problem matchers work
-      # BUILD_DIRECTORY - absolute path to phoenix-rtos-project
-      # CI_CUSTOM_BUILDROOT - relative path to phoenix-rtos-project (from GH Actions workspace)
-      - name: Checkout phoenix-rtos-project
+      # BUILD_DIRECTORY - absolute path to phoenix-pilot-project
+      # CI_CUSTOM_BUILDROOT - relative path to phoenix-pilot-project (from GH Actions workspace)
+      - name: Checkout phoenix-pilot-project
         # we need to use relative paths here so they would work in docker env
         run: |
           mkdir .buildroot && cd .buildroot
-          git clone https://github.com/phoenix-rtos/phoenix-rtos-project --recurse-submodules
-          cd phoenix-rtos-project
+          git clone https://github.com/phoenix-pilot/phoenix-pilot-project --recurse-submodules
+          cd phoenix-pilot-project
           echo "BUILD_DIRECTORY=$(pwd)" >> $GITHUB_ENV
-          echo "CI_CUSTOM_BUILDROOT=.buildroot/phoenix-rtos-project" >> $GITHUB_ENV
+          echo "CI_CUSTOM_BUILDROOT=.buildroot/phoenix-pilot-project" >> $GITHUB_ENV
           git log -1 --pretty=oneline
           git submodule
           rm -rf ${{ github.event.repository.name }}
@@ -82,7 +82,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: phoenix-rtos-${{ matrix.target }}
+          name: phoenix-pilot-${{ matrix.target }}
           path: |
             ${{env.BUILD_DIRECTORY}}/_boot/${{ matrix.target }}
             ${{env.BUILD_DIRECTORY}}/rootfs-${{ matrix.target }}.tar
@@ -104,10 +104,10 @@ jobs:
             test_runner_ext: 'phoenix-pilot-core/tests/trunner_extension'
 
     steps:
-      - name: Checkout phoenix-rtos-project
+      - name: Checkout phoenix-pilot-project
         uses: actions/checkout@v3
         with:
-          repository: phoenix-rtos/phoenix-rtos-project
+          repository: phoenix-pilot/phoenix-pilot-project
           submodules: recursive
 
       - name: Update submodule ${{ github.event.repository.name }}
@@ -120,7 +120,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: phoenix-rtos-${{ matrix.target }}
+          name: phoenix-pilot-${{ matrix.target }}
 
       - name: Untar rootfs
         working-directory: _fs
@@ -159,10 +159,10 @@ jobs:
         target: ['armv7a7-imx6ull-evk', 'armv7m7-imxrt106x-evk', 'armv7m7-imxrt117x-evk', 'armv7a9-zynq7000-zedboard', 'armv7m4-stm32l4x6-nucleo']
 
     steps:
-      - name: Checkout phoenix-rtos-project
+      - name: Checkout phoenix-pilot-project
         uses: actions/checkout@v3
         with:
-          repository: phoenix-rtos/phoenix-rtos-project
+          repository: phoenix-pilot/phoenix-pilot-project
           submodules: recursive
 
       - name: Update submodule ${{ github.event.repository.name }}
@@ -175,7 +175,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: phoenix-rtos-${{ matrix.target }}
+          name: phoenix-pilot-${{ matrix.target }}
 
       - name: Untar rootfs
         working-directory: _fs
@@ -233,6 +233,6 @@ jobs:
 
   send-notification:
     needs: ['build', 'test-emu', 'test-hw']
-    if: failure() && github.event_name != 'pull_request'
+    if: failure() && github.event_name != 'pull_request'  && false   # disable for now
     uses: phoenix-rtos/phoenix-rtos-project/.github/workflows/_send_google_chat.yml@master
     secrets: inherit
