@@ -84,5 +84,51 @@
 #define GPTIMER0_BASE ((void *)0x80003000)
 #define GPTIMER1_BASE ((void *)0x80004000)
 
+/* Interrupts */
+
+#define INT_CTRL_BASE ((void *)0x80002000)
+#define EXTENDED_IRQN 1
+
+/* Timers */
+
+#define TIMER0_CNT    7
+#define TIMER1_CNT    7
+#define TIMER_IRQ     9
+#define GPTIMER0_BASE ((void *)0x80003000)
+#define GPTIMER1_BASE ((void *)0x80004000)
+
+
+/* ADC */
+
+#define ADC_CNT 8
+
+#define ADC0_ACTIVE 1
+#define ADC1_ACTIVE 0
+#define ADC2_ACTIVE 0
+#define ADC3_ACTIVE 0
+#define ADC4_ACTIVE 0
+#define ADC5_ACTIVE 0
+#define ADC6_ACTIVE 0
+#define ADC7_ACTIVE 0
+
+/* SPI */
+
+#define SPI_CNT 2
+
+/* GPIO */
+
+#define GPIO_PORT_CNT 2
+
+/* SpaceWire */
+
+#define SPW_CNT 1
+
+#define SPW0_ACTIVE 0
+#define SPW1_ACTIVE 0
+#define SPW2_ACTIVE 0
+#define SPW3_ACTIVE 0
+#define SPW4_ACTIVE 0
+#define SPW5_ACTIVE 0
+
 
 #endif

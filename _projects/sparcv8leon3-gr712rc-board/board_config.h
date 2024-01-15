@@ -79,6 +79,38 @@
 #define GPTIMER0_BASE ((void *)0x80000300)
 #define GPTIMER1_BASE ((void *)0x80100600)
 
+/* ADC */
+
+#define ADC_CNT 0
+
+#define ADC0_ACTIVE 0
+#define ADC1_ACTIVE 0
+#define ADC2_ACTIVE 0
+#define ADC3_ACTIVE 0
+#define ADC4_ACTIVE 0
+#define ADC5_ACTIVE 0
+#define ADC6_ACTIVE 0
+#define ADC7_ACTIVE 0
+
+/* SPI */
+
+#define SPI_CNT 1
+
+/* GPIO */
+
+#define GPIO_PORT_CNT 2
+
+/* SpaceWire */
+
+#define SPW_CNT 6
+
+#define SPW0_ACTIVE 1
+#define SPW1_ACTIVE 1
+#define SPW2_ACTIVE 0
+#define SPW3_ACTIVE 0
+#define SPW4_ACTIVE 0
+#define SPW5_ACTIVE 0
+
 /* SMP */
 
 #define TLB_IRQ 14
