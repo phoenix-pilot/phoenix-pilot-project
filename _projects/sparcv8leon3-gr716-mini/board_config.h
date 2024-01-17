@@ -34,13 +34,6 @@
 #define UART4_IRQ 6
 #define UART5_IRQ 7
 
-#define UART0_IRQ_LINE 24
-#define UART1_IRQ_LINE 25
-#define UART2_IRQ_LINE 42
-#define UART3_IRQ_LINE 44
-#define UART4_IRQ_LINE 45
-#define UART5_IRQ_LINE 46
-
 #define UART0_TX 2
 #define UART0_RX 3
 
@@ -59,6 +52,13 @@
 #define UART5_TX 43
 #define UART5_RX 44
 
+#define UART0_ACTIVE 0
+#define UART1_ACTIVE 0
+#define UART2_ACTIVE 1
+#define UART3_ACTIVE 1
+#define UART4_ACTIVE 0
+#define UART5_ACTIVE 0
+
 #define UART_CONSOLE_PLO    2
 #define UART_CONSOLE_KERNEL 2
 #define UART_CONSOLE_USER   2
@@ -67,6 +67,52 @@
 #define GPIO_DIR_OUT 1
 
 #define PSEUDODEV 1
+
+/* Interrupts */
+
+#define INT_CTRL_BASE ((void *)0x80002000)
+#define EXTENDED_IRQN 1
+
+/* Timers */
+
+#define TIMER0_CNT    7
+#define TIMER1_CNT    7
+#define TIMER_IRQ     9
+#define GPTIMER0_BASE ((void *)0x80003000)
+#define GPTIMER1_BASE ((void *)0x80004000)
+
+
+/* ADC */
+
+#define ADC_CNT 8
+
+#define ADC0_ACTIVE 1
+#define ADC1_ACTIVE 0
+#define ADC2_ACTIVE 0
+#define ADC3_ACTIVE 0
+#define ADC4_ACTIVE 0
+#define ADC5_ACTIVE 0
+#define ADC6_ACTIVE 0
+#define ADC7_ACTIVE 0
+
+/* SPI */
+
+#define SPI_CNT 2
+
+/* GPIO */
+
+#define GPIO_PORT_CNT 2
+
+/* SpaceWire */
+
+#define SPW_CNT 1
+
+#define SPW0_ACTIVE 0
+#define SPW1_ACTIVE 0
+#define SPW2_ACTIVE 0
+#define SPW3_ACTIVE 0
+#define SPW4_ACTIVE 0
+#define SPW5_ACTIVE 0
 
 
 #endif
