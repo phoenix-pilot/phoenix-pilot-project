@@ -39,6 +39,9 @@ USER_SCRIPT=(
 	"go!")
 
 b_build_project () {
+	b_log "Building user applications"
+	make -C "_user" all install
+
 	b_log "Building phoenix-pilot-core"
 	make -C phoenix-pilot-core all install
 }
