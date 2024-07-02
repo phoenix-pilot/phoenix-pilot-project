@@ -9,19 +9,24 @@
 [ "${BASH_SOURCE[0]}" -ef "$0" ] && echo "You should source this script, not execute it!" && exit 1
 
 
-# Use BBL loader
-RISCV_LOADER="bbl"
+KERNEL_OFFS=$((0x1001000))      # Disk image kernel offset (in bytes)
+OFFS_USER_SCRIPT=$((0x1000000)) # Disk image user script offset (in bytes)
 
+export PLO_DEVICES="ram-storage tty-spike"
 
-# Spike doesn't emulate uart16550, use spike-tty
-PRIMARY_SCRIPT=(
-	"kernelimg ${BOOT_DEVICE}"
+USER_SCRIPT=(
+	"kernel ${BOOT_DEVICE}"
 	"app ${BOOT_DEVICE} -x dummyfs ddr ddr"
 	"app ${BOOT_DEVICE} -x spike-tty ddr ddr"
 	"app ${BOOT_DEVICE} -x psh ddr ddr"
+	"wait 500"
+	"go!"
 )
 
 
 b_image_project () {
+	(cd "$PREFIX_PROJECT/riscv/opensbi/" && make O="$OSBI_BUILD_DIR" CROSS_COMPILE="$CROSS" PLATFORM=generic FW_PAYLOAD_PATH="$PREFIX_BOOT/phoenix.disk")
+	cp "$OSBI_BUILD_DIR/platform/generic/firmware/fw_payload.elf" "$PREFIX_BOOT/phoenix.osbi"
+
 	b_log "The images have been built for the ${TARGET} platform"
 }
