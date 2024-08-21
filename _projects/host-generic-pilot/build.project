@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Shell script for building host-generic-pilot project
+#
+# Copyright 2022, 2023 Phoenix Systems
+# Author: Lukasz Kosinski, Piotr Nieciecki
+#
+
+[ "${BASH_SOURCE[0]}" -ef "$0" ] && echo "You should source this script, not execute it!" && exit 1
+
+
+b_build_project () {
+
+	# FIXME: Remove this when there is a possibility to add test form different submodules than `phoenix-rtos-tests`
+	b_log "Building unity"
+	make -C "phoenix-rtos-tests" unity
+
+	b_log "Building libsensors"
+	make -C "phoenix-rtos-devices" libsensors
+
+	b_log "Building phoenix-pilot-core"
+	make -C phoenix-pilot-core all install
+}
+
+
+b_image_project () {
+	b_log "The images have been built for the ${TARGET} platform"
+}

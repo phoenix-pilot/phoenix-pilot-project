@@ -1,0 +1,7 @@
+:{}:
+W /bin/bind devfs /dev
+X /bin/posixsrv
+X /bin/touch /dummy.txt
+X sbin/sensors -s mpu6000:/dev/spi0.2::2 -s lis2mdl:/dev/spi0.1 -s ms5611:/dev/spi0.0 -s ubx:/dev/ttyS2
+T /dev/console
+X /linuxrc

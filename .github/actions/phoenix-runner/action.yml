@@ -16,6 +16,11 @@ inputs:
     default: false
     required: false
 
+  extension:
+    description: 'Path to the Phoenix test runner extensions'
+    default: ''
+    required: false
+
 
 # action runner
 runs:
@@ -30,6 +35,8 @@ runs:
       # then repeating the target flag is acceptable, the runner is OK with that.
       - ${{ inputs.nightly == 'true' && '--nightly' || format('-T{0}', inputs.target) }}
       - '-Oresults.csv'
+    env:
+      PHOENIX_TRUNNER_EXT: ${{ inputs.extension }}
 
 # branding
 branding:
