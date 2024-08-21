@@ -19,6 +19,11 @@ export LWIP_IPSEC_BUILD=no
 export LWIP_WIFI_BUILD=no
 
 #
+# Setup model of KSZ8081 On-Board Chip 
+#
+export EPHY_KSZ8081=RNA
+
+#
 # Boot configuration
 #
 export KERNEL_PLO_BOOT=y
@@ -27,7 +32,7 @@ export PLO_NOR_BOOT=y
 #
 # PLO configuration
 #
-export PLO_NOR=y
+export PLO_DEVICES="flash-imx6ull uart-imx6ull usbc-cdc"
 
 #
 # Project specific build
